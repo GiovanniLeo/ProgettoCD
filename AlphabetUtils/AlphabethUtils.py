@@ -20,8 +20,8 @@ class AlphabethUtils:
             key = self.alphabeth[i]
             self.alphabethDict.update({key: i})
 
-       # print("Alfabeto Standard")
-        #print(self.alphabethDict)
+    # print("Alfabeto Standard")
+    #print(self.alphabethDict)
 
     '''
     Tale metodo Permuta l'alfabeto iniziale
@@ -36,14 +36,14 @@ class AlphabethUtils:
         for i in range(0, alphaLen):
             key = self.randomOrderedAlphabet[i]
             self.randomAlphabetDict.update({key: i})
-        #Mi da la chiave di indice massimo
-        maxValueKey = max(self.randomAlphabetDict, key= self.randomAlphabetDict.get)
+        # Mi da la chiave di indice massimo
+        maxValueKey = max(self.randomAlphabetDict, key=self.randomAlphabetDict.get)
         maxValue = self.randomAlphabetDict[maxValueKey]
         lastCharacterValue = maxValue + 1
         self.randomAlphabetDict.update({"$": lastCharacterValue})
         self.randomOrderedAlphabet.append("$")
-       #print("\nDizionario random")
-       #print(self.randomAlphabetDict)
+    # print("\nDizionario random")
+    # print(self.randomAlphabetDict)
 
     '''
     Metodo che serve a selezionare le posizioni random
@@ -70,10 +70,19 @@ class AlphabethUtils:
     def getRandomAlphabet(self):
         return self.randomOrderedAlphabet
 
+    def Perm(self, alphabet, key, r):
+        alphabetLength = len(alphabet)
+        i = alphabetLength
+        for i in range(0, alphabetLength):
+            s = (i + r*4 + key*2) % alphabetLength
+            alphabet[i], alphabet[s] = alphabet[s], alphabet[i]
+
+        return alphabet
+
 if __name__ == "__main__":
     alfabeth = 'abcdefghijklmnopqrstuvwxyz'
-    list = ['a', 'b', 'c', 'd', 'e']
-
+    list = [i for i in alfabeth]
+    print(list)
     # def getRandomNumber(s):
     #     return s[0]
     # list,key = sorted(list, key=getRandomNumber)
@@ -81,7 +90,8 @@ if __name__ == "__main__":
     # print(list)
     # print(key)
     prova = AlphabethUtils(alfabeth)
-    prova.perm()
-    str = 'dwe'
-    print(''.join(prova.customSort(str)))
+    # prova.perm()
+    # str = 'dwe'
+    # print(''.join(prova.customSort(str)))
+    print(''.join(prova.Perm(list, 3, 2)))
 
