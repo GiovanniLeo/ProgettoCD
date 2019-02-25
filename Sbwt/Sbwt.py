@@ -2,12 +2,15 @@ from AlphabetUtils.AlphabethUtils import AlphabethUtils
 
 class Sbwt:
 
-    def __init__(self, alphabet):
-        self.alphabet = alphabet
-        self.alphaUtils = AlphabethUtils(alphabet)
-        self.alphaUtils.perm()
-        self.randomAlphabet = self.alphaUtils.getRandomAlphabet()
+    def __init__(self):
+        self.alphaUtils = AlphabethUtils()
+        self.randomAlphabet = ''
 
+    def initialize(self, alphabet):
+        alphaList = [i for i in alfabeth]
+        randomOrderedAlphabet = self.alphaUtils.Perm(alphaList, 3, 2)
+        randomOrderedAlphabet = self.alphaUtils.appendLastCharacter(randomOrderedAlphabet)
+        self.randomAlphabet = ''.join(randomOrderedAlphabet)
 
     def sbwt(self,s):
         """Apply Burrows-Wheeler transform to input string."""
@@ -31,7 +34,8 @@ class Sbwt:
 
 if __name__ == "__main__":
     alfabeth = 'abcdefghijklmnopqrstuvwxyz'
-    test = Sbwt(alfabeth)
+    test = Sbwt()
+    test.initialize(alfabeth)
     print(test.sbwt("mississippi"))
     r = test.sbwt("mississippi")
    # print(test.bwt("mississippi"))
