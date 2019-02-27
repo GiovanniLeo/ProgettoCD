@@ -27,8 +27,8 @@ class AlphabethUtils:
     Tale metodo Permuta l'alfabeto iniziale
     '''
     def appendLastCharacter(self, randomOrderedAlphabet):
-        print("Alfabeto random")
-        print(randomOrderedAlphabet)
+        # print("Alfabeto random")
+        #  print(randomOrderedAlphabet)
         # alphaLen = len(randomOrderedAlphabet)
         #
         # for i in range(0, alphaLen):
@@ -40,9 +40,9 @@ class AlphabethUtils:
         # lastCharacterValue = maxValue + 1
         # self.randomAlphabetDict.update({"$": lastCharacterValue})
         randomOrderedAlphabet.append("$")
-        print(randomOrderedAlphabet)
-    # print("\nDizionario random")
-    # print(self.randomAlphabetDict)
+        #   print(randomOrderedAlphabet)
+        # print("\nDizionario random")
+        # print(self.randomAlphabetDict)
         return randomOrderedAlphabet
 
     '''

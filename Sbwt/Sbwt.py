@@ -6,11 +6,12 @@ class Sbwt:
         self.alphaUtils = AlphabethUtils()
         self.randomAlphabet = ''
 
-    def initialize(self, alphabet):
+    def initialize(self, alfabeth, key, r):
         alphaList = [i for i in alfabeth]
-        randomOrderedAlphabet = self.alphaUtils.Perm(alphaList, 3, 2)
+        randomOrderedAlphabet = self.alphaUtils.Perm(alphaList, key, r)
         randomOrderedAlphabet = self.alphaUtils.appendLastCharacter(randomOrderedAlphabet)
         self.randomAlphabet = ''.join(randomOrderedAlphabet)
+        return self.randomAlphabet
 
     def sbwt(self,s):
         """Apply Burrows-Wheeler transform to input string."""
@@ -33,9 +34,9 @@ class Sbwt:
         return s.strip("$")  # Get rid of start and end markers
 
 if __name__ == "__main__":
-    alfabeth = 'abcdefghijklmnopqrstuvwxyz'
+    alfabeth = 'abcdefghijklmnopqrstuvwxyz#'
     test = Sbwt()
-    test.initialize(alfabeth)
+    test.initialize(alfabeth, 3, 2)
     print(test.sbwt("mississippi"))
     r = test.sbwt("mississippi")
    # print(test.bwt("mississippi"))
