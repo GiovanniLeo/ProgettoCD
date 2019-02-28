@@ -78,6 +78,15 @@ class AlphabethUtils:
 
         return alphabet
 
+    # ---------- Serve per individuare l'alfabeto in un file ----------
+    def getCharsetOfaFile(self, filePathToRead):
+        taxtInFile = open(filePathToRead, "r").read()
+        charset = set(taxtInFile)
+        charsList = list(charset)
+        charsList.append("#")
+        chars = ''.join(charsList).replace('\n', '')
+        return chars
+
 if __name__ == "__main__":
     alfabeth = 'abcdefghijklmnopqrstuvwxyz'
     list = [i for i in alfabeth]
