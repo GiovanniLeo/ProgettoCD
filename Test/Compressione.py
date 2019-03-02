@@ -1,5 +1,9 @@
 import json
 import random as random
+import os
+import sys
+lol = os.path.dirname(os.path.dirname(__file__)).replace('/', '\\') + '\\'
+sys.path.append("C:\\Users\\johnn\\Desktop\\Unisa\\Magistrale\\CD\ProgettoCD\\")
 from AlphabetUtils.AlphabethUtils import AlphabethUtils
 from FileUtils.FileUtils import FileUtils
 from Sbwt.Sbwt import Sbwt
@@ -7,7 +11,7 @@ import time
 
 if __name__ == "__main__":
 
-    filePathToRead = 'C:\\Users\\johnn\\Desktop\\Unisa\\Magistrale\\CD\\ProgettoCD\\Prova.txt'
+    filePathToRead = 'C:\\Users\\johnn\\Desktop\\Unisa\\Magistrale\\CD\\ProgettoCD\\alice29.txt'
     alphaUtils = AlphabethUtils()
     fileUtils = FileUtils()
     sbwtUtils = Sbwt()
