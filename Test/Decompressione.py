@@ -1,7 +1,7 @@
 import os
 import sys
-lol = os.path.dirname(os.path.dirname(__file__)).replace('/', '\\') + '\\'
-sys.path.append("C:\\Users\\johnn\\Desktop\\Unisa\\Magistrale\\CD\ProgettoCD\\")
+# lol = os.path.dirname(os.path.dirname(__file__)).replace('/', '\\') + '\\'
+# sys.path.append("C:\\Users\\johnn\\Desktop\\Unisa\\Magistrale\\CD\ProgettoCD\\")
 import json
 from FileUtils.FileUtils import FileUtils
 from Sbwt.Sbwt import Sbwt
@@ -13,7 +13,7 @@ from collections import namedtuple
 Row = namedtuple('Row', ['line'])
 
 
-def prova(x):
+def mapSbwt(x):
     filePathDict = "C:\\Users\\johnn\\Desktop\\Unisa\\Magistrale\\CD\\ProgettoCD\\dictSBWT.json"
     with open(filePathDict) as dictFile:
         transfDict = json.load(dictFile)
@@ -59,7 +59,7 @@ if __name__ == "__main__":
    
     start_time = time.time()
     with Pool(8) as pool:
-          results = pool.map(prova, rows)
+          results = pool.map(mapSbwt, rows)
 
     pool.close()
     pool.join()

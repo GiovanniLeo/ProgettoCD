@@ -2,8 +2,8 @@ import json
 import random as random
 import os
 import sys
-lol = os.path.dirname(os.path.dirname(__file__)).replace('/', '\\') + '\\'
-sys.path.append("C:\\Users\\johnn\\Desktop\\Unisa\\Magistrale\\CD\ProgettoCD\\")
+# lol = os.path.dirname(os.path.dirname(__file__)).replace('/', '\\') + '\\'
+# sys.path.append("C:\\Users\\johnn\\Desktop\\Unisa\\Magistrale\\CD\ProgettoCD\\")
 from AlphabetUtils.AlphabethUtils import AlphabethUtils
 from FileUtils.FileUtils import FileUtils
 from Sbwt.Sbwt import Sbwt
