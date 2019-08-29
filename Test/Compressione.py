@@ -11,17 +11,19 @@ import time
 
 if __name__ == "__main__":
 
-    filePathToRead = 'C:\\Users\\johnn\\Desktop\\Unisa\\Magistrale\\CD\\ProgettoCD\\alice29.txt'
+    my_path = os.path.abspath(os.getcwd())
+    my_path = os.path.abspath(os.path.join(my_path, '..'))
+    filePathToRead = os.path.join(my_path, "..\\ProgettoCD\\alice29.txt")
     alphaUtils = AlphabethUtils()
     fileUtils = FileUtils()
     sbwtUtils = Sbwt()
     transfLines = []
     transfDict = {}
 
-    filePath = "C:\\Users\\johnn\\Desktop\\Unisa\\Magistrale\\CD\\ProgettoCD\\dictSBWT.json"
+    filePath = os.path.join(my_path, "..\\ProgettoCD\\dictSBWT.json")
     fileW = fileUtils.openFileToWrite(filePath)
 
-    fileOutputPath = "C:\\Users\\johnn\\Desktop\\Unisa\\Magistrale\\CD\\ProgettoCD\\outputSBWT.txt"
+    fileOutputPath = os.path.join(my_path, "..\\ProgettoCD\\outputSBWT.txt")
     fileO = fileUtils.openFileToWrite(fileOutputPath)
     fileO.write('')
     fileO.close()

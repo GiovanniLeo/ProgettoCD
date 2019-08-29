@@ -14,7 +14,9 @@ Row = namedtuple('Row', ['line'])
 
 
 def mapSbwt(x):
-    filePathDict = "C:\\Users\\johnn\\Desktop\\Unisa\\Magistrale\\CD\\ProgettoCD\\dictSBWT.json"
+    my_path = os.path.abspath(os.getcwd())
+    my_path = os.path.abspath(os.path.join(my_path, '..'))
+    filePathDict = os.path.join(my_path, "..\\ProgettoCD\\dictSBWT.json")
     with open(filePathDict) as dictFile:
         transfDict = json.load(dictFile)
     transfDict = dict(transfDict)
@@ -35,10 +37,12 @@ def mapSbwt(x):
 
 if __name__ == "__main__":
 
+    my_path = os.path.abspath(os.getcwd())
+    my_path = os.path.abspath(os.path.join(my_path, '..'))
     fileUtils = FileUtils()
-    filePathToRead = 'C:\\Users\\johnn\\Desktop\\Unisa\\Magistrale\\CD\\ProgettoCD\\outputSBWT.txt'
-    fileOutputPath = "C:\\Users\\johnn\\Desktop\\Unisa\\Magistrale\\CD\\ProgettoCD\\Plain.txt"
-    filePathDict = "C:\\Users\\johnn\\Desktop\\Unisa\\Magistrale\\CD\\ProgettoCD\\dictSBWT.json"
+    filePathToRead = os.path.join(my_path, "..\\ProgettoCD\\outputSBWT.txt")
+    fileOutputPath = os.path.join(my_path, "..\\ProgettoCD\\Plain.txt")
+    filePathDict = os.path.join(my_path, "..\\ProgettoCD\\dictSBWT.json")
 
     fileO = fileUtils.openFileToWrite(fileOutputPath)
     fileO.write('')
