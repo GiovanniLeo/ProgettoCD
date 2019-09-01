@@ -9,10 +9,10 @@ import time
 from multiprocessing import Pool
 from collections import namedtuple
 
-
+#Immutable tipe
 Row = namedtuple('Row', ['line'])
 
-
+#Function used for parallelaize
 def mapSbwt(x):
     my_path = os.path.abspath(os.getcwd())
     my_path = os.path.abspath(os.path.join(my_path, '..'))
@@ -40,6 +40,7 @@ if __name__ == "__main__":
     my_path = os.path.abspath(os.getcwd())
     my_path = os.path.abspath(os.path.join(my_path, '..'))
     fileUtils = FileUtils()
+    #Start Sbwt
     filePathToRead = os.path.join(my_path, "..\\ProgettoCD\\outputSBWT.txt")
     fileOutputPath = os.path.join(my_path, "..\\ProgettoCD\\Plain.txt")
     filePathDict = os.path.join(my_path, "..\\ProgettoCD\\dictSBWT.json")

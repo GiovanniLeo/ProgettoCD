@@ -20,6 +20,7 @@ if __name__ == "__main__":
     transfLines = []
     transfDict = {}
 
+    #Start Sbwt
     filePath = os.path.join(my_path, "..\\ProgettoCD\\dictSBWT.json")
     fileW = fileUtils.openFileToWrite(filePath)
 
@@ -29,7 +30,7 @@ if __name__ == "__main__":
     fileO.close()
     fileO = fileUtils.openFileToWriteAppend(fileOutputPath)
 
-    alfabeth = alphaUtils.getCharsetOfaFile(filePathToRead)
+    alfabeth = alphaUtils.getCharsetOfaFile(filePathToRead, True)
     lines = fileUtils.readFileByLine(filePathToRead)
     linesLength = len(lines)
     alphaLen = len(alfabeth)
@@ -39,15 +40,15 @@ if __name__ == "__main__":
         lines[i] = lines[i].replace('\n', '')
         lines[i] = lines[i].replace(' ', '#')
 
-    start_time = time.time()
+    Sbwt_start_time = time.time()
     for i in range(0, linesLength):
         r = random.randint(0, alphaLen)
         randomAlphabet = sbwtUtils.initialize(alfabeth, key, r)
         transformLine = sbwtUtils.sbwt(lines[i])
         transfLines.append(transformLine)
         transfDict.update({transfLines[i]: randomAlphabet})
-    elapsed_time = time.time() - start_time
-    print(elapsed_time)
+    Sbwt_elapsed_time = time.time() - Sbwt_start_time
+    print(str(Sbwt_elapsed_time) + "  -> elapsed time of SbwtTrasform")
 
     # print(transfLines)
     for i in range(0, len(transfLines)):
@@ -60,3 +61,4 @@ if __name__ == "__main__":
     fileW.write(jsonToWrite)
     fileW.close()
     fileO.close()
+    #End Sbwt
