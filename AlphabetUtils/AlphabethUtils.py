@@ -79,11 +79,12 @@ class AlphabethUtils:
         return alphabet
 
     # ---------- Serve per individuare l'alfabeto in un file ----------
-    def getCharsetOfaFile(self, filePathToRead):
+    def getCharsetOfaFile(self, filePathToRead, appedLastCharacter):
         taxtInFile = open(filePathToRead, "r").read()
         charset = set(taxtInFile)
         charsList = list(charset)
-        charsList.append("#")
+        if(appedLastCharacter):
+            charsList.append("#")
         chars = ''.join(charsList).replace('\n', '')
         return chars
 
