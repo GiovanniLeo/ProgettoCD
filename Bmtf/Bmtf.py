@@ -1,5 +1,6 @@
 from itertools import groupby
 from AlphabetUtils.AlphabethUtils import AlphabethUtils
+import os
 
 class Bmtf:
 
@@ -78,8 +79,14 @@ class Bmtf:
         return plain_text  # Return original string
 
 if __name__ == "__main__":
-    alfabeth = 'abcdefghijklmnopqrstuvwxyz#'
-    test = Bmtf(3)
-    r = test.Bmtf("cavolosto", alfabeth, 3, 2)
-   # print(test.Bmtf("banana", alfabeth, 3, 2))
+    alfabethutils = AlphabethUtils()
+    my_path = os.path.abspath(os.getcwd())
+    my_path = os.path.abspath(os.path.join(my_path, '..'))
+    filePath = os.path.join(my_path, "..\\ProgettoCD\\outputSBWT.txt")
+    alfabeth = alfabethutils.getCharsetOfaFile(filePath)
+
+    test = Bmtf(10)
+    r = test.Bmtf("ANNNE'#WOAEI#LIAREU#L#TENSS###############$DRVDCD", alfabeth, 3, 2)
+    print(test.Ibmtf(r))
+    r = test.Bmtf("CLrrai#ol#ews#########################$l", alfabeth, 3, 2)
     print(test.Ibmtf(r))
