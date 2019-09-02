@@ -7,6 +7,7 @@ import sys
 from AlphabetUtils.AlphabethUtils import AlphabethUtils
 from FileUtils.FileUtils import FileUtils
 from Sbwt.Sbwt import Sbwt
+from Bmtf.Bmtf import Bmtf
 import time
 
 if __name__ == "__main__":
@@ -62,3 +63,47 @@ if __name__ == "__main__":
     fileW.close()
     fileO.close()
     #End Sbwt
+
+    #Start Bmtf
+
+    bmtfUtils = Bmtf(4)
+    filePathToRead = os.path.join(my_path, "..\\ProgettoCD\\outputSBWT.txt")
+    fileOutputPath = os.path.join(my_path, "..\\ProgettoCD\\outputBMTF.txt")
+    fileO = fileUtils.openFileToWrite(fileOutputPath)
+    fileO.write('')
+    fileO.close()
+    fileO = fileUtils.openFileToWriteAppend(fileOutputPath)
+
+    alfabeth = alphaUtils.getCharsetOfaFile(filePathToRead, False)
+    lines = fileUtils.readFileByLine(filePathToRead)
+    linesLength = len(lines)
+    alphaLen = len(alfabeth)
+    key = random.randint(0, alphaLen)
+    Bmtf_transfLines = []
+
+    for i in range(0, linesLength):
+        lines[i] = lines[i].replace('\n', '')
+
+    Bmtf_start_time = time.time()
+    for i in range(0, linesLength):
+        r = random.randint(0, alphaLen)
+
+        Bmtf_transformLine = bmtfUtils.Bmtf(str(lines[i]), alfabeth, key, r)
+        Bmtf_transformLine = Bmtf_transformLine[0]
+        #print(transformLine)
+        Bmtf_transfLines.append(Bmtf_transformLine)
+
+    Bmtf_elapsed_time = time.time() - Bmtf_start_time
+    print(str(Bmtf_elapsed_time) + "  -> elapsed time of BmtfTrasform")
+
+    for i in range(0, len(Bmtf_transfLines)):
+        line =  Bmtf_transfLines[i]
+        line = ','.join(line)
+        stringToWrite = line + '\n'
+        fileO.write(stringToWrite)
+
+
+
+
+
+

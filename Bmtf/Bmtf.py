@@ -9,6 +9,7 @@ class Bmtf:
         self.l = l
         self.rowtodelete = 0
         self.numofdecompression = 0
+        self.cleanFile()
 
 
     def Bmtf(self, plain_text, alfabeth, key, r):
@@ -112,6 +113,13 @@ class Bmtf:
         f.close()
         return plain_text  # Return original string
 
+    def cleanFile(self):
+        f1 = open("filefornumblock.txt", "w")
+        f1.close()
+        f2 = open("fileforalfabeth.txt", "w")
+        f2.close()
+
+
 if __name__ == "__main__":
     alfabethutils = AlphabethUtils()
     my_path = os.path.abspath(os.getcwd())
@@ -125,6 +133,7 @@ if __name__ == "__main__":
     r2 = test.Bmtf("rosato", alfabeth, 3, 2)
     r3 = test.Bmtf("banana", alfabeth, 3, 2)
     r4 = test.Bmtf("gigione", alfabeth, 3, 2)
+    print(','.join(r4[0]))
     print(test.Ibmtf(r1))
     print(test.Ibmtf(r2))
     print(test.Ibmtf(r3))
