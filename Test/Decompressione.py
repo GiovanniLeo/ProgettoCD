@@ -7,6 +7,7 @@ from FileUtils.FileUtils import FileUtils
 from Sbwt.Sbwt import Sbwt
 import time
 from multiprocessing import Pool
+from Bmtf.Bmtf import Bmtf
 from collections import namedtuple
 
 #Immutable tipe
@@ -27,12 +28,18 @@ def mapSbwt(x):
     if x.line in transfDict.keys():
         alphabet = transfDict.get(x.line)
         sbwtUtils.setRandomAlphabet(alphabet)
-        lineToTransorm = x.line
+        lineToTransorm = x.line # line method access to
         resultIsbwt = sbwtUtils.Sibwt(lineToTransorm)
         resultIsbwt = resultIsbwt.replace("#", " ")
         resultIsbwt = resultIsbwt + '\n'
     dictFile.close()
     return resultIsbwt
+
+def mapIbtmf(x):
+    bmtfUtils = Bmtf(4)
+    IBmtf_transofmedLine = bmtfUtils.Ibmtf(x.line.split(','))
+    IBmtf_transofmedLine = IBmtf_transofmedLine + '\n'
+    return IBmtf_transofmedLine
 
 
 if __name__ == "__main__":
@@ -40,8 +47,41 @@ if __name__ == "__main__":
     my_path = os.path.abspath(os.getcwd())
     my_path = os.path.abspath(os.path.join(my_path, '..'))
     fileUtils = FileUtils()
+
+    bmtfUtils = Bmtf(4)
+    filePathToRead = os.path.join(my_path, "..\\ProgettoCD\\outputBMTF.txt")
+    fileOutputPath = os.path.join(my_path, "..\\ProgettoCD\\outputIBMTF.txt")
+    fileO = fileUtils.openFileToWrite(fileOutputPath)
+    fileO.write('')
+    fileO.close()
+    fileO = fileUtils.openFileToWriteAppend(fileOutputPath)
+    Bmtf_lines = fileUtils.readFileByLine(filePathToRead)
+    Bmtf_linesLen = len(Bmtf_lines)
+
+    for i in range(0, Bmtf_linesLen):
+        Bmtf_lines[i] = Bmtf_lines[i].replace('\n', '')
+
+
+    rows = []
+    for i in range(0, Bmtf_linesLen):
+        rows.append(Row(Bmtf_lines[i]))
+    rows = tuple(rows)
+    Ibmtf_start_time = time.time()
+
+    with Pool(8) as pool:
+        IBmtf_results = pool.map(mapIbtmf, rows)
+
+    pool.close()
+    pool.join()
+
+    Ibmtf_elaspsed_time = time.time() - Ibmtf_start_time
+    print(str(Ibmtf_elaspsed_time) + " -> Ibmtf elapsedTime")
+
+    for i in range(0, len(IBmtf_results)):
+        fileO.write(IBmtf_results[i])
+
     #Start Sbwt
-    filePathToRead = os.path.join(my_path, "..\\ProgettoCD\\outputSBWT.txt")
+    filePathToRead = os.path.join(my_path, "..\\ProgettoCD\\outputIBMTF.txt")
     fileOutputPath = os.path.join(my_path, "..\\ProgettoCD\\Plain.txt")
     filePathDict = os.path.join(my_path, "..\\ProgettoCD\\dictSBWT.json")
 
@@ -69,7 +109,7 @@ if __name__ == "__main__":
     pool.close()
     pool.join()
     elapsed_time = time.time() - start_time
-    print(elapsed_time)
+    print(str(elapsed_time) + " -> Sbwt elapsedTime")
 
     results = list(results)
     for i in range(0, len(results)):

@@ -9,7 +9,7 @@ class Bmtf:
         self.l = l
         self.rowtodelete = 0
         self.numofdecompression = 0
-        self.cleanFile()
+
 
 
     def Bmtf(self, plain_text, alfabeth, key, r):
@@ -63,12 +63,12 @@ class Bmtf:
 
       #  print(compressed_text)
         f.close()
-        return (compressed_text, dictionary)
+        return compressed_text
 
 
     def Ibmtf(self,compressed_data):
 
-        compressed_text = compressed_data[0]
+        compressed_text = compressed_data
         numofblocks = 0
 
         #apro il file per capire quante righe devo scartare dal file contenente tutti gli alfabeti utilizzati
@@ -127,7 +127,9 @@ if __name__ == "__main__":
     filePath = os.path.join(my_path, "..\\ProgettoCD\\outputSBWT.txt")
     alfabeth = alfabethutils.getCharsetOfaFile(filePath, False)
 
+
     test = Bmtf(4)
+    test.cleanFile()
 
     r1 = test.Bmtf("cavolo", alfabeth, 3, 2)
     r2 = test.Bmtf("rosato", alfabeth, 3, 2)

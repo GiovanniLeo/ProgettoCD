@@ -67,6 +67,7 @@ if __name__ == "__main__":
     #Start Bmtf
 
     bmtfUtils = Bmtf(4)
+    bmtfUtils.cleanFile()
     filePathToRead = os.path.join(my_path, "..\\ProgettoCD\\outputSBWT.txt")
     fileOutputPath = os.path.join(my_path, "..\\ProgettoCD\\outputBMTF.txt")
     fileO = fileUtils.openFileToWrite(fileOutputPath)
@@ -89,7 +90,7 @@ if __name__ == "__main__":
         r = random.randint(0, alphaLen)
 
         Bmtf_transformLine = bmtfUtils.Bmtf(str(lines[i]), alfabeth, key, r)
-        Bmtf_transformLine = Bmtf_transformLine[0]
+        Bmtf_transformLine = Bmtf_transformLine
         #print(transformLine)
         Bmtf_transfLines.append(Bmtf_transformLine)
 
@@ -97,7 +98,7 @@ if __name__ == "__main__":
     print(str(Bmtf_elapsed_time) + "  -> elapsed time of BmtfTrasform")
 
     for i in range(0, len(Bmtf_transfLines)):
-        line =  Bmtf_transfLines[i]
+        line = Bmtf_transfLines[i]
         line = ','.join(line)
         stringToWrite = line + '\n'
         fileO.write(stringToWrite)
