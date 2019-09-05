@@ -36,9 +36,12 @@ def mapSbwt(x):
     return resultIsbwt
 
 def mapIbtmf(x):
+    fileUtils = FileUtils()
+    fileO = fileUtils.openFileToWriteAppend(fileOutputPath)
     bmtfUtils = Bmtf(4)
     IBmtf_transofmedLine = bmtfUtils.Ibmtf(x.line.split(','))
     IBmtf_transofmedLine = IBmtf_transofmedLine + '\n'
+    fileO.write(IBmtf_transofmedLine)
     return IBmtf_transofmedLine
 
 
@@ -57,28 +60,31 @@ if __name__ == "__main__":
     fileO = fileUtils.openFileToWriteAppend(fileOutputPath)
     Bmtf_lines = fileUtils.readFileByLine(filePathToRead)
     Bmtf_linesLen = len(Bmtf_lines)
-
+    IBmtf_results_arr = []
+    Ibmtf_start_time = time.time()
     for i in range(0, Bmtf_linesLen):
         Bmtf_lines[i] = Bmtf_lines[i].replace('\n', '')
+        IBmtf_transofmedLine = bmtfUtils.Ibmtf(Bmtf_lines[i].split(','))
+        IBmtf_transofmedLine = IBmtf_transofmedLine + '\n'
+        fileO.write(IBmtf_transofmedLine)
+
+    # rows = []
+    # for i in range(0, Bmtf_linesLen):
+    #     rows.append(Row(Bmtf_lines[i]))
+    # rows = tuple(rows)
 
 
-    rows = []
-    for i in range(0, Bmtf_linesLen):
-        rows.append(Row(Bmtf_lines[i]))
-    rows = tuple(rows)
-    Ibmtf_start_time = time.time()
+    # with Pool(1) as pool:
+    #     IBmtf_results = pool.map(mapIbtmf, rows)
 
-    with Pool(8) as pool:
-        IBmtf_results = pool.map(mapIbtmf, rows)
-
-    pool.close()
-    pool.join()
+    # pool.close()
+    # pool.join()
 
     Ibmtf_elaspsed_time = time.time() - Ibmtf_start_time
     print(str(Ibmtf_elaspsed_time) + " -> Ibmtf elapsedTime")
 
-    for i in range(0, len(IBmtf_results)):
-        fileO.write(IBmtf_results[i])
+    # for i in range(0, len(IBmtf_results)):
+    #     fileO.write(IBmtf_results[i])
 
     #Start Sbwt
     filePathToRead = os.path.join(my_path, "..\\ProgettoCD\\outputIBMTF.txt")
