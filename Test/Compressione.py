@@ -8,6 +8,7 @@ from AlphabetUtils.AlphabethUtils import AlphabethUtils
 from FileUtils.FileUtils import FileUtils
 from Sbwt.Sbwt import Sbwt
 from Bmtf.Bmtf import Bmtf
+from Rle.Rle import Rle
 import time
 
 if __name__ == "__main__":
@@ -102,6 +103,42 @@ if __name__ == "__main__":
         line = ','.join(line)
         stringToWrite = line + '\n'
         fileO.write(stringToWrite)
+
+    #end Bmtf
+
+
+    #Start RLE
+    fileOutputPath = os.path.join(my_path, "..\\ProgettoCD\\outputRLE.txt")
+    fileO = fileUtils.openFileToWrite(fileOutputPath)
+    fileO.write('')
+    fileO.close()
+    fileO = fileUtils.openFileToWriteAppend(fileOutputPath)
+    filePathToRead = os.path.join(my_path, "..\\ProgettoCD\\outputBMTF.txt")
+    rleUtils = Rle()
+
+    lines = fileUtils.readFileByLine(filePathToRead)
+    linesLength = len(lines)
+
+    Rle_transfLines = []
+
+    for i in range(0, linesLength):
+        lines[i] = lines[i].replace('\n', '')
+
+    Rle_start_time = time.time()
+    for i in range(0, linesLength):
+        Rle_transfLine = rleUtils.rle_encode(lines[i])
+        Rle_transfLines.append(Rle_transfLine)
+
+    Rle_elapsed_time = time.time() - Rle_start_time
+    print(str(Rle_elapsed_time) + "  -> elapsed time of  RleTrasform")
+
+    for i in range(0, len(Rle_transfLines)):
+        line = Rle_transfLines[i]
+        stringToWrite = line + '\n'
+        fileO.write(stringToWrite)
+
+
+
 
 
 

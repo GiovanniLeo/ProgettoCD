@@ -9,7 +9,7 @@ import time
 from multiprocessing import Pool
 from Bmtf.Bmtf import Bmtf
 from collections import namedtuple
-
+from Rle.Rle import Rle
 #Immutable tipe
 Row = namedtuple('Row', ['line'])
 
@@ -51,8 +51,35 @@ if __name__ == "__main__":
     my_path = os.path.abspath(os.path.join(my_path, '..'))
     fileUtils = FileUtils()
 
+    #Start IRle
+    print("Start IRLE")
+    rleUtils = Rle()
+    filePathToRead = os.path.join(my_path, "..\\ProgettoCD\\outputRLE.txt")
+    fileOutputPath = os.path.join(my_path, "..\\ProgettoCD\\outputIRLE.txt")
+    fileO = fileUtils.openFileToWrite(fileOutputPath)
+    fileO.write('')
+    fileO.close()
+    fileO = fileUtils.openFileToWriteAppend(fileOutputPath)
+    Rle_lines = fileUtils.readFileByLine(filePathToRead)
+    Rle_linesLen = len(Rle_lines)
+
+    IRle_results_arr = []
+    IRle_start_time = time.time()
+    for i in range(0, Rle_linesLen):
+        Rle_lines[i] = Rle_lines[i].replace('\n', '')
+        IRle_transofmedLine = rleUtils.rle_decode(Rle_lines[i])
+        IRle_transofmedLine = IRle_transofmedLine + '\n'
+        fileO.write(IRle_transofmedLine)
+
+    IRle_elaspsed_time = time.time() - IRle_start_time
+    print(str(IRle_elaspsed_time) + " -> Ibmtf elapsedTime")
+
+    fileO.close()
+
+    #Start IBmtf
+    print("Start IBMTF")
     bmtfUtils = Bmtf(4)
-    filePathToRead = os.path.join(my_path, "..\\ProgettoCD\\outputBMTF.txt")
+    filePathToRead = os.path.join(my_path, "..\\ProgettoCD\\outputIRLE.txt")
     fileOutputPath = os.path.join(my_path, "..\\ProgettoCD\\outputIBMTF.txt")
     fileO = fileUtils.openFileToWrite(fileOutputPath)
     fileO.write('')
@@ -87,6 +114,7 @@ if __name__ == "__main__":
     #     fileO.write(IBmtf_results[i])
 
     #Start Sbwt
+    print("Start ISbwt")
     filePathToRead = os.path.join(my_path, "..\\ProgettoCD\\outputIBMTF.txt")
     fileOutputPath = os.path.join(my_path, "..\\ProgettoCD\\Plain.txt")
     filePathDict = os.path.join(my_path, "..\\ProgettoCD\\dictSBWT.json")
