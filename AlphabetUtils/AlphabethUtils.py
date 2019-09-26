@@ -27,8 +27,8 @@ class AlphabethUtils:
     Tale metodo Permuta l'alfabeto iniziale
     '''
     def appendLastCharacter(self, randomOrderedAlphabet):
-        print("Alfabeto random")
-        print(randomOrderedAlphabet)
+        # print("Alfabeto random")
+        #  print(randomOrderedAlphabet)
         # alphaLen = len(randomOrderedAlphabet)
         #
         # for i in range(0, alphaLen):
@@ -40,9 +40,9 @@ class AlphabethUtils:
         # lastCharacterValue = maxValue + 1
         # self.randomAlphabetDict.update({"$": lastCharacterValue})
         randomOrderedAlphabet.append("$")
-        print(randomOrderedAlphabet)
-    # print("\nDizionario random")
-    # print(self.randomAlphabetDict)
+        #   print(randomOrderedAlphabet)
+        # print("\nDizionario random")
+        # print(self.randomAlphabetDict)
         return randomOrderedAlphabet
 
     '''
@@ -77,6 +77,16 @@ class AlphabethUtils:
             alphabet[i], alphabet[s] = alphabet[s], alphabet[i]
 
         return alphabet
+
+    # ---------- Serve per individuare l'alfabeto in un file ----------
+    def getCharsetOfaFile(self, filePathToRead, appedLastCharacter):
+        taxtInFile = open(filePathToRead, "r").read()
+        charset = set(taxtInFile)
+        charsList = list(charset)
+        if(appedLastCharacter):
+            charsList.append("#")
+        chars = ''.join(charsList).replace('\n', '')
+        return chars
 
 if __name__ == "__main__":
     alfabeth = 'abcdefghijklmnopqrstuvwxyz'
