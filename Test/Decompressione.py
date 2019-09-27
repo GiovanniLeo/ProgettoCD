@@ -78,7 +78,7 @@ if __name__ == "__main__":
 
     #Start IBmtf
     print("Start IBMTF")
-    bmtfUtils = Bmtf(4)
+    bmtfUtils = Bmtf(6)
     filePathToRead = os.path.join(my_path, "..\\ProgettoCD\\outputIRLE.txt")
     fileOutputPath = os.path.join(my_path, "..\\ProgettoCD\\outputIBMTF.txt")
     fileO = fileUtils.openFileToWrite(fileOutputPath)

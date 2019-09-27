@@ -67,7 +67,7 @@ if __name__ == "__main__":
 
     #Start Bmtf
 
-    bmtfUtils = Bmtf(4)
+    bmtfUtils = Bmtf(6)
     bmtfUtils.cleanFile()
     filePathToRead = os.path.join(my_path, "..\\ProgettoCD\\outputSBWT.txt")
     fileOutputPath = os.path.join(my_path, "..\\ProgettoCD\\outputBMTF.txt")
@@ -127,6 +127,7 @@ if __name__ == "__main__":
     Rle_start_time = time.time()
     for i in range(0, linesLength):
         Rle_transfLine = rleUtils.rle_encode(lines[i])
+        print(Rle_transfLine)
         Rle_transfLines.append(Rle_transfLine)
 
     Rle_elapsed_time = time.time() - Rle_start_time
