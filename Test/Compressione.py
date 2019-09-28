@@ -1,15 +1,14 @@
 import json
 import random as random
 import os
-import sys
-# lol = os.path.dirname(os.path.dirname(__file__)).replace('/', '\\') + '\\'
-# sys.path.append("C:\\Users\\johnn\\Desktop\\Unisa\\Magistrale\\CD\ProgettoCD\\")
 from AlphabetUtils.AlphabethUtils import AlphabethUtils
 from FileUtils.FileUtils import FileUtils
 from Sbwt.Sbwt import Sbwt
 from Bmtf.Bmtf import Bmtf
 from Rle.Rle import Rle
+from PC.PC import PC
 import time
+import pickle
 
 if __name__ == "__main__":
 
@@ -67,7 +66,7 @@ if __name__ == "__main__":
 
     #Start Bmtf
 
-    bmtfUtils = Bmtf(2)
+    bmtfUtils = Bmtf(6)
     bmtfUtils.cleanFile()
     filePathToRead = os.path.join(my_path, "..\\ProgettoCD\\outputSBWT.txt")
     fileOutputPath = os.path.join(my_path, "..\\ProgettoCD\\outputBMTF.txt")
@@ -136,6 +135,34 @@ if __name__ == "__main__":
         line = Rle_transfLines[i]
         stringToWrite = line + '\n'
         fileO.write(stringToWrite)
+
+
+    #Start PC
+
+    filePathToRead = os.path.join(my_path, "..\\ProgettoCD\\OutputRLE.txt")
+    fileOutputPath = os.path.join(my_path, "..\\ProgettoCD\\outputPC.obj")
+    fileOutputPathCodec = os.path.join(my_path, "..\\ProgettoCD\\outputPC_Codec.obj")
+
+    fileO = open(fileOutputPath, "wb")
+    fileO_Codec = open(fileOutputPathCodec, "wb")
+
+    Rle_lines = fileUtils.readFileByLine(filePathToRead)
+    Rle_linesLen = len(Rle_lines)
+
+    pcUtils = PC()
+    PC_start_time = time.time()
+    encodedResult = []
+    codecResult = []
+    for i in range(0, Rle_linesLen):
+        encoded = pcUtils.PC_Encode(Rle_lines[i])
+        encodedResult.append(encoded[0])
+        codecResult.append(encoded[1])
+
+    PC_elapsed_time = time.time() - PC_start_time
+    print(str(PC_elapsed_time) + "  -> elapsed time of  PCTrasform")
+
+    pickle.dump(encodedResult, fileO)
+    pickle.dump(codecResult, fileO_Codec)
 
 
 

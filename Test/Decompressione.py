@@ -1,15 +1,15 @@
 import os
-import sys
-# lol = os.path.dirname(os.path.dirname(__file__)).replace('/', '\\') + '\\'
-# sys.path.append("C:\\Users\\johnn\\Desktop\\Unisa\\Magistrale\\CD\ProgettoCD\\")
 import json
 from FileUtils.FileUtils import FileUtils
+from PC.PC import PC
 from Sbwt.Sbwt import Sbwt
 import time
 from multiprocessing import Pool
 from Bmtf.Bmtf import Bmtf
 from collections import namedtuple
 from Rle.Rle import Rle
+import pickle
+
 #Immutable tipe
 Row = namedtuple('Row', ['line'])
 
@@ -51,10 +51,35 @@ if __name__ == "__main__":
     my_path = os.path.abspath(os.path.join(my_path, '..'))
     fileUtils = FileUtils()
 
+    # Start PC
+    print("Start PC")
+
+    filePathToReadEncoded = os.path.join(my_path, "..\\ProgettoCD\\outputPC.obj")
+    filePathToReadCodec = os.path.join(my_path, "..\\ProgettoCD\\outputPC_Codec.obj")
+    fileOutputPath = os.path.join(my_path, "..\\ProgettoCD\\OutputPC.txt")
+
+    fileR_ecodedArr = open(filePathToReadEncoded, 'rb')
+    fileR_codecArr = open(filePathToReadCodec, 'rb')
+
+    fileO = open(fileOutputPath, 'w')
+    fileO.close()
+
+    fileO = open(fileOutputPath, 'w')
+
+    econdedArr = pickle.load(fileR_ecodedArr)
+    codecArr = pickle.load(fileR_codecArr)
+
+    pcUtils = PC()
+    for i in range(0, len(econdedArr)):
+        decodedStr = pcUtils.PC_Decode(codecArr[i], econdedArr[i])
+        fileO.write(decodedStr + "\n")
+
+    fileO.close()
+
     #Start IRle
     print("Start IRLE")
     rleUtils = Rle()
-    filePathToRead = os.path.join(my_path, "..\\ProgettoCD\\outputRLE.txt")
+    filePathToRead = os.path.join(my_path, "..\\ProgettoCD\\OutputPC.txt")
     fileOutputPath = os.path.join(my_path, "..\\ProgettoCD\\outputIRLE.txt")
     fileO = fileUtils.openFileToWrite(fileOutputPath)
     fileO.write('')
@@ -78,7 +103,7 @@ if __name__ == "__main__":
 
     #Start IBmtf
     print("Start IBMTF")
-    bmtfUtils = Bmtf(2)
+    bmtfUtils = Bmtf(6)
     filePathToRead = os.path.join(my_path, "..\\ProgettoCD\\outputIRLE.txt")
     fileOutputPath = os.path.join(my_path, "..\\ProgettoCD\\outputIBMTF.txt")
     fileO = fileUtils.openFileToWrite(fileOutputPath)
@@ -150,3 +175,7 @@ if __name__ == "__main__":
         fileO.write(results[i])
 
     fileO.close()
+
+
+
+
