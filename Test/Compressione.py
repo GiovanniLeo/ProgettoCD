@@ -67,7 +67,7 @@ if __name__ == "__main__":
 
     #Start Bmtf
 
-    bmtfUtils = Bmtf(6)
+    bmtfUtils = Bmtf(2)
     bmtfUtils.cleanFile()
     filePathToRead = os.path.join(my_path, "..\\ProgettoCD\\outputSBWT.txt")
     fileOutputPath = os.path.join(my_path, "..\\ProgettoCD\\outputBMTF.txt")
