@@ -70,9 +70,14 @@ if __name__ == "__main__":
     codecArr = pickle.load(fileR_codecArr)
 
     pcUtils = PC()
+    PC_start_time = time.time()
+
     for i in range(0, len(econdedArr)):
         decodedStr = pcUtils.PC_Decode(codecArr[i], econdedArr[i])
         fileO.write(decodedStr + "\n")
+
+    PC_elapsed_time = time.time() - PC_start_time
+    print(str(PC_elapsed_time) + " -> PC elapsedTime")
 
     fileO.close()
 
