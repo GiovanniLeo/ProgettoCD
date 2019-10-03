@@ -20,7 +20,7 @@ class Sbwt:
 
     def sbwt(self, s):
         """Apply Burrows-Wheeler transform to input string."""
-        assert "$" not in s, "Input string cannot contain STX and ETX characters"
+        assert "$" not in s, "\"$\" must be not present in the string"
         s = s + "$"  # Add start and end of text marker
         # Table of rotations of string (Viene ordinata secondo l'fabeto custom)
         # print(sorted(s[j:] + s[:j] for j in range(len(s))))

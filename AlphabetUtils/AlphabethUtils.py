@@ -84,7 +84,8 @@ class AlphabethUtils:
         charset = set(taxtInFile)
         charsList = list(charset)
         if(appedLastCharacter):
-            charsList.append("#")
+            charsList.append("ç")
+            charsList.append("§")
         chars = ''.join(charsList).replace('\n', '')
         return chars
 

@@ -11,21 +11,24 @@ import time
 import pickle
 
 if __name__ == "__main__":
+    baseOutputPath = "..\\ProgettoCD\\Output\\"
+    baseInputPath = "..\\ProgettoCD\\Input\\"
 
     my_path = os.path.abspath(os.getcwd())
     my_path = os.path.abspath(os.path.join(my_path, '..'))
-    filePathToRead = os.path.join(my_path, "..\\ProgettoCD\\alice29.txt")
+    filePathToRead = os.path.join(my_path, baseInputPath + "grammar.lsp")
     alphaUtils = AlphabethUtils()
     fileUtils = FileUtils()
     sbwtUtils = Sbwt()
     transfLines = []
     transfDict = {}
 
+
     #Start Sbwt
-    filePath = os.path.join(my_path, "..\\ProgettoCD\\dictSBWT.json")
+    filePath = os.path.join(my_path, baseOutputPath + "dictSBWT.json")
     fileW = fileUtils.openFileToWrite(filePath)
 
-    fileOutputPath = os.path.join(my_path, "..\\ProgettoCD\\outputSBWT.txt")
+    fileOutputPath = os.path.join(my_path, baseOutputPath + "outputSBWT.txt")
     fileO = fileUtils.openFileToWrite(fileOutputPath)
     fileO.write('')
     fileO.close()
@@ -39,7 +42,9 @@ if __name__ == "__main__":
 
     for i in range(0, linesLength):
         lines[i] = lines[i].replace('\n', '')
-        lines[i] = lines[i].replace(' ', '#')
+        lines[i] = lines[i].replace(' ', 'ç')
+        if '$' in lines[i]:
+            lines[i] = lines[i].replace("$", "§")
 
     Sbwt_start_time = time.time()
     for i in range(0, linesLength):
@@ -68,8 +73,8 @@ if __name__ == "__main__":
 
     bmtfUtils = Bmtf(6)
     bmtfUtils.cleanFile()
-    filePathToRead = os.path.join(my_path, "..\\ProgettoCD\\outputSBWT.txt")
-    fileOutputPath = os.path.join(my_path, "..\\ProgettoCD\\outputBMTF.txt")
+    filePathToRead = os.path.join(my_path, baseOutputPath + "outputSBWT.txt")
+    fileOutputPath = os.path.join(my_path, baseOutputPath + "outputBMTF.txt")
     fileO = fileUtils.openFileToWrite(fileOutputPath)
     fileO.write('')
     fileO.close()
@@ -107,12 +112,12 @@ if __name__ == "__main__":
 
 
     #Start RLE
-    fileOutputPath = os.path.join(my_path, "..\\ProgettoCD\\outputRLE.txt")
+    fileOutputPath = os.path.join(my_path, baseOutputPath + "outputRLE.txt")
     fileO = fileUtils.openFileToWrite(fileOutputPath)
     fileO.write('')
     fileO.close()
     fileO = fileUtils.openFileToWriteAppend(fileOutputPath)
-    filePathToRead = os.path.join(my_path, "..\\ProgettoCD\\outputBMTF.txt")
+    filePathToRead = os.path.join(my_path, baseOutputPath + "outputBMTF.txt")
     rleUtils = Rle()
 
     lines = fileUtils.readFileByLine(filePathToRead)
@@ -139,9 +144,9 @@ if __name__ == "__main__":
 
     #Start PC
 
-    filePathToRead = os.path.join(my_path, "..\\ProgettoCD\\OutputRLE.txt")
-    fileOutputPath = os.path.join(my_path, "..\\ProgettoCD\\outputPC.obj")
-    fileOutputPathCodec = os.path.join(my_path, "..\\ProgettoCD\\outputPC_Codec.obj")
+    filePathToRead = os.path.join(my_path, baseOutputPath + "OutputRLE.txt")
+    fileOutputPath = os.path.join(my_path, baseOutputPath + "outputPC.obj")
+    fileOutputPathCodec = os.path.join(my_path, baseOutputPath + "outputPC_Codec.obj")
 
     fileO = open(fileOutputPath, "wb")
     fileO_Codec = open(fileOutputPathCodec, "wb")
@@ -164,6 +169,8 @@ if __name__ == "__main__":
     pickle.dump(encodedResult, fileO)
     pickle.dump(codecResult, fileO_Codec)
 
+    fileO.close()
+    fileO_Codec.close()
 
 
 

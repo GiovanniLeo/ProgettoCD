@@ -17,7 +17,7 @@ Row = namedtuple('Row', ['line'])
 def mapSbwt(x):
     my_path = os.path.abspath(os.getcwd())
     my_path = os.path.abspath(os.path.join(my_path, '..'))
-    filePathDict = os.path.join(my_path, "..\\ProgettoCD\\dictSBWT.json")
+    filePathDict = os.path.join(my_path, "..\\ProgettoCD\\Output\\dictSBWT.json")
     with open(filePathDict) as dictFile:
         transfDict = json.load(dictFile)
     transfDict = dict(transfDict)
@@ -30,7 +30,7 @@ def mapSbwt(x):
         sbwtUtils.setRandomAlphabet(alphabet)
         lineToTransorm = x.line # line method access to
         resultIsbwt = sbwtUtils.Sibwt(lineToTransorm)
-        resultIsbwt = resultIsbwt.replace("#", " ")
+        resultIsbwt = resultIsbwt.replace("ç", " ")
         resultIsbwt = resultIsbwt + '\n'
     dictFile.close()
     return resultIsbwt
@@ -47,6 +47,8 @@ def mapIbtmf(x):
 
 if __name__ == "__main__":
 
+    baseOutputPath = "..\\ProgettoCD\\Output\\"
+    baseInputPath = "..\\ProgettoCD\\Input\\"
     my_path = os.path.abspath(os.getcwd())
     my_path = os.path.abspath(os.path.join(my_path, '..'))
     fileUtils = FileUtils()
@@ -54,9 +56,9 @@ if __name__ == "__main__":
     # Start PC
     print("Start PC")
 
-    filePathToReadEncoded = os.path.join(my_path, "..\\ProgettoCD\\outputPC.obj")
-    filePathToReadCodec = os.path.join(my_path, "..\\ProgettoCD\\outputPC_Codec.obj")
-    fileOutputPath = os.path.join(my_path, "..\\ProgettoCD\\OutputPC.txt")
+    filePathToReadEncoded = os.path.join(my_path, baseOutputPath + "outputPC.obj")
+    filePathToReadCodec = os.path.join(my_path, baseOutputPath + "outputPC_Codec.obj")
+    fileOutputPath = os.path.join(my_path, baseOutputPath + "OutputPC.txt")
 
     fileR_ecodedArr = open(filePathToReadEncoded, 'rb')
     fileR_codecArr = open(filePathToReadCodec, 'rb')
@@ -84,8 +86,8 @@ if __name__ == "__main__":
     #Start IRle
     print("Start IRLE")
     rleUtils = Rle()
-    filePathToRead = os.path.join(my_path, "..\\ProgettoCD\\OutputPC.txt")
-    fileOutputPath = os.path.join(my_path, "..\\ProgettoCD\\outputIRLE.txt")
+    filePathToRead = os.path.join(my_path, baseOutputPath + "OutputPC.txt")
+    fileOutputPath = os.path.join(my_path, baseOutputPath + "outputIRLE.txt")
     fileO = fileUtils.openFileToWrite(fileOutputPath)
     fileO.write('')
     fileO.close()
@@ -102,15 +104,15 @@ if __name__ == "__main__":
         fileO.write(IRle_transofmedLine)
 
     IRle_elaspsed_time = time.time() - IRle_start_time
-    print(str(IRle_elaspsed_time) + " -> Ibmtf elapsedTime")
+    print(str(IRle_elaspsed_time) + " -> IRLE elapsedTime")
 
     fileO.close()
 
     #Start IBmtf
     print("Start IBMTF")
     bmtfUtils = Bmtf(6)
-    filePathToRead = os.path.join(my_path, "..\\ProgettoCD\\outputIRLE.txt")
-    fileOutputPath = os.path.join(my_path, "..\\ProgettoCD\\outputIBMTF.txt")
+    filePathToRead = os.path.join(my_path, baseOutputPath + "outputIRLE.txt")
+    fileOutputPath = os.path.join(my_path, baseOutputPath + "outputIBMTF.txt")
     fileO = fileUtils.openFileToWrite(fileOutputPath)
     fileO.write('')
     fileO.close()
@@ -145,9 +147,9 @@ if __name__ == "__main__":
 
     #Start Sbwt
     print("Start ISbwt")
-    filePathToRead = os.path.join(my_path, "..\\ProgettoCD\\outputIBMTF.txt")
-    fileOutputPath = os.path.join(my_path, "..\\ProgettoCD\\Plain.txt")
-    filePathDict = os.path.join(my_path, "..\\ProgettoCD\\dictSBWT.json")
+    filePathToRead = os.path.join(my_path, baseOutputPath + "outputIBMTF.txt")
+    fileOutputPath = os.path.join(my_path, baseOutputPath + "Plain.txt")
+    filePathDict = os.path.join(my_path, baseOutputPath + "dictSBWT.json")
 
     fileO = fileUtils.openFileToWrite(fileOutputPath)
     fileO.write('')
@@ -177,6 +179,8 @@ if __name__ == "__main__":
 
     results = list(results)
     for i in range(0, len(results)):
+        if "§" in results[i]:
+            results[i] = results[i].replace("§", "$")
         fileO.write(results[i])
 
     fileO.close()
