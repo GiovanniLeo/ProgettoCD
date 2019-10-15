@@ -10,8 +10,6 @@ class Bmtf:
         self.rowtodelete = 0
         self.numofdecompression = 0
 
-
-
     def Bmtf(self, plain_text, alfabeth, key, r):
         #calcolo il numero di blocchi in cui sarà divisa la stringa
         numofblocks = (len(plain_text)//self.l)
@@ -39,7 +37,7 @@ class Bmtf:
         blocks = [input[n:n + self.l] for n in range(0, len(input), self.l)]
 
         for block in blocks:
-                                     # sto creando una lista di liste. in array0 ho il primo blocco della lista iniziale, cioè [a,a,a].
+                                     # sto creando una lista di liste. in array0 ho il primo blocco della lista iniziale, in array1 ho il secondo blocco della lista.
 
             if count == 0:
                 dictionary = alphaUtils.Perm(alphaList, key, hash(r))  # perm the first block
@@ -52,22 +50,21 @@ class Bmtf:
                 f.write("\n")
 
             for c in block:
-                # per ogni carattere nel blocco applico mtf classica
+                # per ogni carattere nel blocco, applico mtf classica
                 rank = dictionary.index(str(c))
                 compressed_text.append(str(rank))
 
                 dictionary.pop(rank)
                 dictionary.insert(0, c)
+
             array.append(block)
             count = count + 1
 
-      #  print(compressed_text)
         f.close()
         return compressed_text
 
 
     def Ibmtf(self,compressed_data):
-
         compressed_text = compressed_data
         numofblocks = 0
 
