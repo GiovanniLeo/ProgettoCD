@@ -10,7 +10,7 @@ from collections import namedtuple
 from Rle.Rle import Rle
 import pickle
 
-#Immutable tipe
+#Immutable tupe
 Row = namedtuple('Row', ['line'])
 
 #Function used for parallelaize
@@ -35,15 +35,6 @@ def mapSbwt(x):
     dictFile.close()
     return resultIsbwt
 
-def mapIbtmf(x):
-    fileUtils = FileUtils()
-    fileO = fileUtils.openFileToWriteAppend(fileOutputPath)
-    bmtfUtils = Bmtf(4)
-    IBmtf_transofmedLine = bmtfUtils.Ibmtf(x.line.split(','))
-    IBmtf_transofmedLine = IBmtf_transofmedLine + '\n'
-    fileO.write(IBmtf_transofmedLine)
-    return IBmtf_transofmedLine
-
 
 if __name__ == "__main__":
 
@@ -52,6 +43,13 @@ if __name__ == "__main__":
     my_path = os.path.abspath(os.getcwd())
     my_path = os.path.abspath(os.path.join(my_path, '..'))
     fileUtils = FileUtils()
+
+    filePathExtension = os.path.join(my_path, baseOutputPath + "extension.txt")
+    line = fileUtils.readFileByLine(filePathExtension)
+    fileExtension = line[0]
+    print(fileExtension)
+
+
 
     # Start PC
     print("Start PC")
@@ -127,28 +125,14 @@ if __name__ == "__main__":
         IBmtf_transofmedLine = IBmtf_transofmedLine + '\n'
         fileO.write(IBmtf_transofmedLine)
 
-    # rows = []
-    # for i in range(0, Bmtf_linesLen):
-    #     rows.append(Row(Bmtf_lines[i]))
-    # rows = tuple(rows)
-
-
-    # with Pool(1) as pool:
-    #     IBmtf_results = pool.map(mapIbtmf, rows)
-
-    # pool.close()
-    # pool.join()
-
     Ibmtf_elaspsed_time = time.time() - Ibmtf_start_time
     print(str(Ibmtf_elaspsed_time) + " -> Ibmtf elapsedTime")
 
-    # for i in range(0, len(IBmtf_results)):
-    #     fileO.write(IBmtf_results[i])
-
     #Start Sbwt
     print("Start ISbwt")
+    plainFileName = "Plain." + fileExtension
     filePathToRead = os.path.join(my_path, baseOutputPath + "outputIBMTF.txt")
-    fileOutputPath = os.path.join(my_path, baseOutputPath + "Plain.txt")
+    fileOutputPath = os.path.join(my_path, baseOutputPath + plainFileName)
     filePathDict = os.path.join(my_path, baseOutputPath + "dictSBWT.json")
 
     fileO = fileUtils.openFileToWrite(fileOutputPath)

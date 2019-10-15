@@ -20,29 +20,13 @@ class AlphabethUtils:
             self.alphabethDict.update({key: i})
 
         return self.alphabethDict
-    # print("Alfabeto Standard")
-    #print(self.alphabethDict)
+
 
     '''
     Tale metodo Permuta l'alfabeto iniziale
     '''
     def appendLastCharacter(self, randomOrderedAlphabet):
-        # print("Alfabeto random")
-        #  print(randomOrderedAlphabet)
-        # alphaLen = len(randomOrderedAlphabet)
-        #
-        # for i in range(0, alphaLen):
-        #     key = randomOrderedAlphabet[i]
-        #     self.randomAlphabetDict.update({key: i})
-        # # Mi da la chiave di indice massimo
-        # maxValueKey = max(self.randomAlphabetDict, key=self.randomAlphabetDict.get)
-        # maxValue = self.randomAlphabetDict[maxValueKey]
-        # lastCharacterValue = maxValue + 1
-        # self.randomAlphabetDict.update({"$": lastCharacterValue})
         randomOrderedAlphabet.append("$")
-        #   print(randomOrderedAlphabet)
-        # print("\nDizionario random")
-        # print(self.randomAlphabetDict)
         return randomOrderedAlphabet
 
     '''
@@ -54,22 +38,13 @@ class AlphabethUtils:
         self.randomIndexs.append(index)
         return index
 
-    '''
-    Tale metodo setta le posizioni in maniera random
-    '''
-    # def setRandomPosition(self):
-    #     str = sorted(self.alphabeth, key=lambda x: self.getRandomPosition())
-    #     return str
-
-    '''
-    Metodo che permette di ordinare in maniera cutomizzata
-    '''
-    # def customSort(self, str):
-    #     return sorted(str, key=lambda x: self.randomAlphabetDict.get(x))
-
     def getRandomAlphabet(self):
         return self.randomOrderedAlphabet
 
+    '''
+    Semplica e funzione di permutazione che si occupa di 
+    andare ad eseguire uno swap di variabili.
+    '''
     def Perm(self, alphabet, key, r):
         alphabetLength = len(alphabet)
         for i in range(0, alphabetLength):
@@ -78,7 +53,10 @@ class AlphabethUtils:
 
         return alphabet
 
-    # ---------- Serve per individuare l'alfabeto in un file ----------
+    '''
+    Serve per individuare l'alfabeto in un file e aggiunge dei carattere 
+    speciali al fine di codificare gli spazi
+    '''
     def getCharsetOfaFile(self, filePathToRead, appedLastCharacter):
         taxtInFile = open(filePathToRead, "r").read()
         charset = set(taxtInFile)

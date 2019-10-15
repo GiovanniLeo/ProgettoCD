@@ -13,15 +13,22 @@ import pickle
 if __name__ == "__main__":
     baseOutputPath = "..\\ProgettoCD\\Output\\"
     baseInputPath = "..\\ProgettoCD\\Input\\"
-
+    fileName = "grammar.lsp"
+    fileExtension = fileName.split(".")[1]
     my_path = os.path.abspath(os.getcwd())
     my_path = os.path.abspath(os.path.join(my_path, '..'))
-    filePathToRead = os.path.join(my_path, baseInputPath + "grammar.lsp")
+    filePathToRead = os.path.join(my_path, baseInputPath + fileName)
     alphaUtils = AlphabethUtils()
     fileUtils = FileUtils()
     sbwtUtils = Sbwt()
     transfLines = []
     transfDict = {}
+
+    #Sto scrivendo l'estensione del file
+    filePathExtension = os.path.join(my_path, baseOutputPath + "extension.txt")
+    fileWextension = fileUtils.openFileToWrite(filePathExtension)
+    fileWextension.write(fileExtension)
+    fileWextension.close()
 
 
     #Start Sbwt

@@ -23,7 +23,6 @@ class Sbwt:
         assert "$" not in s, "\"$\" must be not present in the string"
         s = s + "$"  # Add start and end of text marker
         # Table of rotations of string (Viene ordinata secondo l'fabeto custom)
-        # print(sorted(s[j:] + s[:j] for j in range(len(s))))
         matrix = sorted([s[i:] + s[:i] for i in range(len(s))], key=lambda x: [self.randomAlphabet.index(c) for c in x])
         # Table of rotations of string
         last_column = [row[-1:] for row in matrix]  # Last characters of each row
