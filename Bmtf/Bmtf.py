@@ -10,8 +10,6 @@ class Bmtf:
         self.rowtodelete = 0
         self.numofdecompression = 0
 
-
-
     def Bmtf(self, plain_text, alfabeth, key, r):
         #calcolo il numero di blocchi in cui sarà divisa la stringa
         numofblocks = (len(plain_text)//self.l)
@@ -61,7 +59,6 @@ class Bmtf:
             array.append(block)
             count = count + 1
 
-      #  print(compressed_text)
         f.close()
         return compressed_text
 
@@ -84,18 +81,16 @@ class Bmtf:
         lines = f.readlines()
         #mi prendo dalla lista gli alfabeti che servono all'attuale blocco
         lines = lines[self.rowtodelete:]
-        dictionary = lines[0]
 
         plain_text = ""
         rank = 0
         count = 0
         indexblock = 0
-        notfirst = False
 
         # read in each character of the encoded text
         for i in compressed_text:
             #sto passando al blocco successivo e pertanto devo prendere l'alfabeto del nuovo blocco
-            if count % self.l == 0 & notfirst:
+            if count % self.l == 0:
                 dictionary = list(lines[indexblock])
                 indexblock = indexblock + 1
 
@@ -107,7 +102,6 @@ class Bmtf:
             e = dictionary.pop(rank)
             dictionary.insert(0, e)
             count = count + 1
-            notfirst = True
             
         self.numofdecompression += 1
         f.close()
