@@ -8,35 +8,9 @@ class AlphabethUtils:
         self.randomIndexs = []
         self.randomOrderedAlphabet = ''
 
-    '''
-    Taale metodo mappa le posiziopni delle lettere 
-    nel dizionario
-    '''
-    def mapAlphabetToDict(self, alphabeth):
-        alphaLen = len(alphabeth)
-
-        for i in range(0, alphaLen):
-            key = alphabeth[i]
-            self.alphabethDict.update({key: i})
-
-        return self.alphabethDict
-
-
-    '''
-    Tale metodo Permuta l'alfabeto iniziale
-    '''
     def appendLastCharacter(self, randomOrderedAlphabet):
         randomOrderedAlphabet.append("$")
         return randomOrderedAlphabet
-
-    '''
-    Metodo che serve a selezionare le posizioni random
-    '''
-    def getRandomPosition(self, alphabeth):
-        maxLen = len(alphabeth)
-        index = random.randint(0, maxLen)
-        self.randomIndexs.append(index)
-        return index
 
     def getRandomAlphabet(self):
         return self.randomOrderedAlphabet

@@ -13,7 +13,7 @@ import pickle
 if __name__ == "__main__":
     baseOutputPath = "..\\ProgettoCD\\Output\\"
     baseInputPath = "..\\ProgettoCD\\Input\\"
-    fileName = "grammar.lsp"
+    fileName = "alice29.txt"
     fileExtension = fileName.split(".")[1]
     my_path = os.path.abspath(os.getcwd())
     my_path = os.path.abspath(os.path.join(my_path, '..'))
