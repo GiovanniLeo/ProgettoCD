@@ -1,7 +1,5 @@
 from AlphabetUtils.AlphabethUtils import AlphabethUtils
 
-
-
 class Sbwt:
 
     def __init__(self):

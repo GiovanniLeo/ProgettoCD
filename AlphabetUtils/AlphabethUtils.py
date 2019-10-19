@@ -1,20 +1,11 @@
-import random
 
 class AlphabethUtils:
     def __init__(self):
-        self.list = list
-        self.randomAlphabetDict = {}
-        self.alphabethDict = {}
-        self.randomIndexs = []
-        self.randomOrderedAlphabet = ''
+        pass
 
     def appendLastCharacter(self, randomOrderedAlphabet):
         randomOrderedAlphabet.append("$")
         return randomOrderedAlphabet
-
-    def getRandomAlphabet(self):
-        return self.randomOrderedAlphabet
-
     '''
     Semplica e funzione di permutazione che si occupa di 
     andare ad eseguire uno swap di variabili.

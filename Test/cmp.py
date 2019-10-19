@@ -1,4 +1,3 @@
-import filecmp
 import os
 
 def textCompare(fl1,fl2):
@@ -15,6 +14,6 @@ def textCompare(fl1,fl2):
 if __name__ == '__main__':
     my_path = os.path.abspath(os.getcwd())
     my_path = os.path.abspath(os.path.join(my_path, '..'))
-    fileOriginal = os.path.join(my_path, "..\\ProgettoCD\\Input\\grammar.lsp")
-    fileDecompressed = os.path.join(my_path, "..\\ProgettoCD\\Output\\Plain.lsp")
+    fileOriginal = os.path.join(my_path, "..\\ProgettoCD\\Input\\alice29.txt")
+    fileDecompressed = os.path.join(my_path, "..\\ProgettoCD\\Output\\Plain.txt")
     print(textCompare(fileOriginal, fileDecompressed))
