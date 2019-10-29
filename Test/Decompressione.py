@@ -9,6 +9,8 @@ from Bmtf.Bmtf import Bmtf
 from collections import namedtuple
 from Rle.Rle import Rle
 import pickle
+import shutil
+
 
 #Immutable tupe
 Row = namedtuple('Row', ['line'])
@@ -86,6 +88,8 @@ if __name__ == "__main__":
     rleUtils = Rle()
     filePathToRead = os.path.join(my_path, baseOutputPath + "OutputPC.txt")
     fileOutputPath = os.path.join(my_path, baseOutputPath + "outputIRLE.txt")
+    filePathDictRLE = os.path.join(my_path, baseOutputPath + "dictRLE.json")
+
     fileO = fileUtils.openFileToWrite(fileOutputPath)
     fileO.write('')
     fileO.close()
@@ -93,13 +97,18 @@ if __name__ == "__main__":
     Rle_lines = fileUtils.readFileByLine(filePathToRead)
     Rle_linesLen = len(Rle_lines)
 
+    with open(filePathDictRLE) as dictFile:
+        RLE_Dict = json.load(dictFile)
+    RLE_Dict = dict(RLE_Dict)
+
     IRle_results_arr = []
     IRle_start_time = time.time()
     for i in range(0, Rle_linesLen):
         Rle_lines[i] = Rle_lines[i].replace('\n', '')
-        IRle_transofmedLine = rleUtils.rle_decode(Rle_lines[i])
-        IRle_transofmedLine = IRle_transofmedLine + '\n'
-        fileO.write(IRle_transofmedLine)
+        if Rle_lines[i] in RLE_Dict.keys():
+            IRle_transofmedLine = rleUtils.rle_decode(RLE_Dict.get(Rle_lines[i]))
+            IRle_transofmedLine = IRle_transofmedLine + '\n'
+            fileO.write(IRle_transofmedLine)
 
     IRle_elaspsed_time = time.time() - IRle_start_time
     print(str(IRle_elaspsed_time) + " -> IRLE elapsedTime")
@@ -111,6 +120,7 @@ if __name__ == "__main__":
     bmtfUtils = Bmtf(6)
     filePathToRead = os.path.join(my_path, baseOutputPath + "outputIRLE.txt")
     fileOutputPath = os.path.join(my_path, baseOutputPath + "outputIBMTF.txt")
+    filePathDictBMTF = os.path.join(my_path, baseOutputPath + "dictBMTF.json")
     fileO = fileUtils.openFileToWrite(fileOutputPath)
     fileO.write('')
     fileO.close()
@@ -118,6 +128,11 @@ if __name__ == "__main__":
     Bmtf_lines = fileUtils.readFileByLine(filePathToRead)
     Bmtf_linesLen = len(Bmtf_lines)
     IBmtf_results_arr = []
+
+    with open(filePathDictBMTF) as dictFile:
+        BMTF_Dict = json.load(dictFile)
+    BMTF_Dict = dict(BMTF_Dict)
+
     Ibmtf_start_time = time.time()
     for i in range(0, Bmtf_linesLen):
         Bmtf_lines[i] = Bmtf_lines[i].replace('\n', '')
@@ -168,6 +183,8 @@ if __name__ == "__main__":
         fileO.write(results[i])
 
     fileO.close()
+
+
 
 
 
