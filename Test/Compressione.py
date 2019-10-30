@@ -11,6 +11,7 @@ import time
 import pickle
 
 if __name__ == "__main__":
+    #sperimental2
     baseOutputPath = "..\\ProgettoCD\\Output\\"
     baseInputPath = "..\\ProgettoCD\\Input\\"
     fileName = "alice29.txt"
