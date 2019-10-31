@@ -4,7 +4,7 @@ import Test.cmp as cmp
 
 #
 if __name__ == '__main__':
-    filename = "grammar.lsp"
+    filename = "alicee29.txt"
     valueToPass = cp.compressione(filename)
     sbwt_dict = valueToPass[0]
     rle_dict = valueToPass[1]

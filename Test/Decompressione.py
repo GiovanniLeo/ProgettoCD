@@ -48,7 +48,7 @@ def decompressione(sbwt_dict, rle_dict):
     # Start PC
     print("Start IPC")
 
-    filePathToReadEncoded = os.path.join(my_path, baseOutputPath + "outputPC.obj")
+    filePathToReadEncoded = os.path.join(my_path, baseOutputPath + "compressedOutput.obj")
     filePathToReadCodec = os.path.join(my_path, baseOutputPath + "outputPC_Codec.obj")
     fileOutputPath = os.path.join(my_path, baseOutputPath + "OutputPC.txt")
 

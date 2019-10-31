@@ -20,7 +20,7 @@ def compareFile(originFile, decopressedFile):
     onlyfiles = [f for f in os.listdir(outputPath) if os.path.isfile(os.path.join(outputPath, f))]
 
     for i in range(0, len(onlyfiles)):
-        if onlyfiles[i] != decopressedFile:
+        if onlyfiles[i] != decopressedFile and onlyfiles[i] !=  "compressedOutput.obj":
             filePath = os.path.join(my_path, "..\\ProgettoCD\\Output\\"+ onlyfiles[i] )
             os.remove(filePath)
     print("-----------------------------------------------------------------------")

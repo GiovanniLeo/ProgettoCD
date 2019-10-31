@@ -155,7 +155,7 @@ def compressione(fileName):
     print("Start PC")
 
     filePathToRead = os.path.join(my_path, baseOutputPath + "OutputRLE.txt")
-    fileOutputPath = os.path.join(my_path, baseOutputPath + "outputPC.obj")
+    fileOutputPath = os.path.join(my_path, baseOutputPath + "compressedOutput.obj")
     fileOutputPathCodec = os.path.join(my_path, baseOutputPath + "outputPC_Codec.obj")
 
     fileO = open(fileOutputPath, "wb")
