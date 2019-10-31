@@ -13,32 +13,25 @@ import shutil
 
 
 #Immutable tupe
-Row = namedtuple('Row', ['line'])
+Row = namedtuple('Row', ['line', 'alphabet'])
 
 #Function used for parallelaize
 def mapSbwt(x):
-    my_path = os.path.abspath(os.getcwd())
-    my_path = os.path.abspath(os.path.join(my_path, '..'))
-    filePathDict = os.path.join(my_path, "..\\ProgettoCD\\Output\\dictSBWT.json")
-    with open(filePathDict) as dictFile:
-        transfDict = json.load(dictFile)
-    transfDict = dict(transfDict)
-
     sbwtUtils = Sbwt()
     resultIsbwt = ''
-
-    if x.line in transfDict.keys():
-        alphabet = transfDict.get(x.line)
-        sbwtUtils.setRandomAlphabet(alphabet)
-        lineToTransorm = x.line # line method access to
-        resultIsbwt = sbwtUtils.Sibwt(lineToTransorm)
-        resultIsbwt = resultIsbwt.replace("ç", " ")
-        resultIsbwt = resultIsbwt + '\n'
-    dictFile.close()
+    alphabet = x.alphabet
+    sbwtUtils.setRandomAlphabet(alphabet)
+    lineToTransorm = x.line  # line method access to
+    resultIsbwt = sbwtUtils.Sibwt(lineToTransorm)
+    resultIsbwt = resultIsbwt.replace("ç", " ")
+    resultIsbwt = resultIsbwt + '\n'
     return resultIsbwt
 
 
-if __name__ == "__main__":
+
+
+def decompressione(sbwt_dict, rle_dict):
+
 
     baseOutputPath = "..\\ProgettoCD\\Output\\"
     baseInputPath = "..\\ProgettoCD\\Input\\"
@@ -49,12 +42,11 @@ if __name__ == "__main__":
     filePathExtension = os.path.join(my_path, baseOutputPath + "extension.txt")
     line = fileUtils.readFileByLine(filePathExtension)
     fileExtension = line[0]
-    print(fileExtension)
-
+    print("------------------- Start Decompression for lossless checking -------------------")
 
 
     # Start PC
-    print("Start PC")
+    print("Start IPC")
 
     filePathToReadEncoded = os.path.join(my_path, baseOutputPath + "outputPC.obj")
     filePathToReadCodec = os.path.join(my_path, baseOutputPath + "outputPC_Codec.obj")
@@ -79,7 +71,7 @@ if __name__ == "__main__":
         fileO.write(decodedStr + "\n")
 
     PC_elapsed_time = time.time() - PC_start_time
-    print(str(PC_elapsed_time) + " -> PC elapsedTime")
+    print(str(PC_elapsed_time) + " -> IPC elapsedTime")
 
     fileO.close()
 
@@ -88,7 +80,7 @@ if __name__ == "__main__":
     rleUtils = Rle()
     filePathToRead = os.path.join(my_path, baseOutputPath + "OutputPC.txt")
     fileOutputPath = os.path.join(my_path, baseOutputPath + "outputIRLE.txt")
-    filePathDictRLE = os.path.join(my_path, baseOutputPath + "dictRLE.json")
+    # filePathDictRLE = os.path.join(my_path, baseOutputPath + "dictRLE.json")
 
     fileO = fileUtils.openFileToWrite(fileOutputPath)
     fileO.write('')
@@ -97,9 +89,11 @@ if __name__ == "__main__":
     Rle_lines = fileUtils.readFileByLine(filePathToRead)
     Rle_linesLen = len(Rle_lines)
 
-    with open(filePathDictRLE) as dictFile:
-        RLE_Dict = json.load(dictFile)
-    RLE_Dict = dict(RLE_Dict)
+    # with open(filePathDictRLE) as dictFile:
+    #     RLE_Dict = json.load(dictFile)
+    # RLE_Dict = dict(RLE_Dict)
+
+    RLE_Dict = rle_dict
 
     IRle_results_arr = []
     IRle_start_time = time.time()
@@ -120,18 +114,14 @@ if __name__ == "__main__":
     bmtfUtils = Bmtf(6)
     filePathToRead = os.path.join(my_path, baseOutputPath + "outputIRLE.txt")
     fileOutputPath = os.path.join(my_path, baseOutputPath + "outputIBMTF.txt")
-    filePathDictBMTF = os.path.join(my_path, baseOutputPath + "dictBMTF.json")
     fileO = fileUtils.openFileToWrite(fileOutputPath)
     fileO.write('')
     fileO.close()
     fileO = fileUtils.openFileToWriteAppend(fileOutputPath)
     Bmtf_lines = fileUtils.readFileByLine(filePathToRead)
     Bmtf_linesLen = len(Bmtf_lines)
-    IBmtf_results_arr = []
 
-    with open(filePathDictBMTF) as dictFile:
-        BMTF_Dict = json.load(dictFile)
-    BMTF_Dict = dict(BMTF_Dict)
+
 
     Ibmtf_start_time = time.time()
     for i in range(0, Bmtf_linesLen):
@@ -164,7 +154,9 @@ if __name__ == "__main__":
 
     rows = []
     for i in range(0, linesLen):
-        rows.append(Row(lines[i]))
+        if lines[i] in sbwt_dict.keys():
+            alphabet = sbwt_dict.get(lines[i])
+            rows.append(Row(lines[i], alphabet))
     rows = tuple(rows)
    
     start_time = time.time()

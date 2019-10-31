@@ -9,13 +9,13 @@ from Rle.Rle import Rle
 from PC.PC import PC
 import time
 import pickle
-import numpy as np
 
-if __name__ == "__main__":
+
+def compressione(fileName):
     #sperimental2
+    print("------------------- Start Compression -------------------")
     baseOutputPath = "..\\ProgettoCD\\Output\\"
     baseInputPath = "..\\ProgettoCD\\Input\\"
-    fileName = "alice29.txt"
     fileExtension = fileName.split(".")[1]
     my_path = os.path.abspath(os.getcwd())
     my_path = os.path.abspath(os.path.join(my_path, '..'))
@@ -23,8 +23,8 @@ if __name__ == "__main__":
     alphaUtils = AlphabethUtils()
     fileUtils = FileUtils()
     sbwtUtils = Sbwt()
-    transfLines = []
-    transfDict = {}
+    SBWT_transfLines = []
+    SBWT_transfDict = {}
 
     #Sto scrivendo l'estensione del file
     filePathExtension = os.path.join(my_path, baseOutputPath + "extension.txt")
@@ -34,9 +34,7 @@ if __name__ == "__main__":
 
 
     #Start Sbwt
-    filePath = os.path.join(my_path, baseOutputPath + "dictSBWT.json")
-    fileW = fileUtils.openFileToWrite(filePath)
-
+    print("Start SBWT")
     fileOutputPath = os.path.join(my_path, baseOutputPath + "outputSBWT.txt")
     fileO = fileUtils.openFileToWrite(fileOutputPath)
     fileO.write('')
@@ -60,32 +58,24 @@ if __name__ == "__main__":
         r = random.randint(0, alphaLen)
         randomAlphabet = sbwtUtils.initialize(alfabeth, key, r)
         transformLine = sbwtUtils.sbwt(lines[i])
-        transfLines.append(transformLine)
-        transfDict.update({transfLines[i]: randomAlphabet})
+        SBWT_transfLines.append(transformLine)
+        SBWT_transfDict.update({SBWT_transfLines[i]: randomAlphabet})
     Sbwt_elapsed_time = time.time() - Sbwt_start_time
     print(str(Sbwt_elapsed_time) + "  -> elapsed time of SbwtTrasform")
 
-    # print(transfLines)
-    for i in range(0, len(transfLines)):
-        stringToWrite = transfLines[i] + '\n'
-        fileO.write(stringToWrite)
 
-    unglyJson = json.dumps(transfDict)
-    parsed = json.loads(unglyJson)
-    jsonToWrite = json.dumps(parsed, indent=2, sort_keys=True)
-    fileW.write(jsonToWrite)
-    fileW.close()
-    fileO.close()
+    for i in range(0, len(SBWT_transfLines)):
+        stringToWrite = SBWT_transfLines[i] + '\n'
+        fileO.write(stringToWrite)
     #End Sbwt
 
     #Start Bmtf
+    print("Start BMTF")
 
     bmtfUtils = Bmtf(6)
     bmtfUtils.cleanFile()
     filePathToRead = os.path.join(my_path, baseOutputPath + "outputSBWT.txt")
     fileOutputPath = os.path.join(my_path, baseOutputPath + "outputBMTF.txt")
-    filePathDict = os.path.join(my_path, baseOutputPath + "dictBMTF.json")
-    fileWDict = fileUtils.openFileToWrite(filePathDict)
     fileO = open(fileOutputPath, "w")
 
     alfabeth = alphaUtils.getCharsetOfaFile(filePathToRead, False)
@@ -104,7 +94,6 @@ if __name__ == "__main__":
 
         Bmtf_transformLine = bmtfUtils.Bmtf(str(lines[i]), alfabeth, key, r)
         Bmtf_transformLine = Bmtf_transformLine
-        #print(transformLine)
         Bmtf_transfLines.append(Bmtf_transformLine)
 
     Bmtf_elapsed_time = time.time() - Bmtf_start_time
@@ -119,27 +108,18 @@ if __name__ == "__main__":
         Bmtf_lines_dict.update({lineWOS: lineSep})
         stringToWrite = lineWOS + '\n'
         fileO.write(stringToWrite)
-
-    unglyJson = json.dumps(Bmtf_lines_dict)
-    parsed = json.loads(unglyJson)
-    jsonToWrite = json.dumps(parsed, indent=2, sort_keys=True)
-    fileWDict.write(jsonToWrite)
-
-    #pickle.dump(Bmtf_lines_to_write, fileO)
-
     #end Bmtf
 
 
     #Start RLE
+    print("Start RLE")
     fileOutputPath = os.path.join(my_path, baseOutputPath + "outputRLE.txt")
     fileO = fileUtils.openFileToWrite(fileOutputPath)
     fileO.write('')
     fileO.close()
     fileO = fileUtils.openFileToWriteAppend(fileOutputPath)
     filePathToRead = os.path.join(my_path, baseOutputPath + "outputBMTF.txt")
-    filePathDict = os.path.join(my_path, baseOutputPath + "dictBMTF.json")
-    filePathDictRLE = os.path.join(my_path, baseOutputPath + "dictRLE.json")
-    fileWDictRLE = fileUtils.openFileToWrite(filePathDictRLE)
+
 
     rleUtils = Rle()
 
@@ -148,10 +128,7 @@ if __name__ == "__main__":
 
     Rle_transfLines = []
 
-
-    with open(filePathDict) as dictFile:
-        bmtf_Dict = json.load(dictFile)
-    bmtf_Dict = dict(bmtf_Dict)
+    bmtf_Dict = Bmtf_lines_dict
 
     for i in range(0, linesLength):
         lines[i] = lines[i].replace('\n', '')
@@ -173,12 +150,9 @@ if __name__ == "__main__":
         Rle_lines_dict.update({lineWOS: line})
         fileO.write(stringToWrite)
 
-    unglyJson = json.dumps(Rle_lines_dict)
-    parsed = json.loads(unglyJson)
-    jsonToWrite = json.dumps(parsed, indent=2, sort_keys=True)
-    fileWDictRLE.write(jsonToWrite)
-
     #Start PC
+
+    print("Start PC")
 
     filePathToRead = os.path.join(my_path, baseOutputPath + "OutputRLE.txt")
     fileOutputPath = os.path.join(my_path, baseOutputPath + "outputPC.obj")
@@ -207,6 +181,13 @@ if __name__ == "__main__":
 
     fileO.close()
     fileO_Codec.close()
+    returValues = []
+
+    returValues.append(SBWT_transfDict)
+    returValues.append(Rle_lines_dict)
+    returValues.append(fileExtension)
+
+    return returValues
 
 
 

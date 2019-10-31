@@ -11,9 +11,17 @@ def textCompare(fl1,fl2):
         return True
     else:
         return False
-if __name__ == '__main__':
+def compareFile(originFile, decopressedFile):
     my_path = os.path.abspath(os.getcwd())
     my_path = os.path.abspath(os.path.join(my_path, '..'))
-    fileOriginal = os.path.join(my_path, "..\\ProgettoCD\\Input\\plrabn12.txt")
-    fileDecompressed = os.path.join(my_path, "..\\ProgettoCD\\Output\\Plain.txt")
-    print(textCompare(fileOriginal, fileDecompressed))
+    fileOriginal = os.path.join(my_path, "..\\ProgettoCD\\Input\\" + originFile )
+    fileDecompressed = os.path.join(my_path, "..\\ProgettoCD\\Output\\" + decopressedFile)
+    outputPath =  os.path.join(my_path, "..\\ProgettoCD\\Output\\")
+    onlyfiles = [f for f in os.listdir(outputPath) if os.path.isfile(os.path.join(outputPath, f))]
+
+    for i in range(0, len(onlyfiles)):
+        if onlyfiles[i] != decopressedFile:
+            filePath = os.path.join(my_path, "..\\ProgettoCD\\Output\\"+ onlyfiles[i] )
+            os.remove(filePath)
+    print("-----------------------------------------------------------------------")
+    print("Lossless compression ->" + str(textCompare(fileOriginal, fileDecompressed)))
