@@ -111,7 +111,7 @@ def decompressione(sbwt_dict, rle_dict):
 
     #Start IBmtf
     print("Start IBMTF")
-    bmtfUtils = Bmtf(6)
+    bmtfUtils = Bmtf(10)
     filePathToRead = os.path.join(my_path, baseOutputPath + "outputIRLE.txt")
     fileOutputPath = os.path.join(my_path, baseOutputPath + "outputIBMTF.txt")
     fileO = fileUtils.openFileToWrite(fileOutputPath)

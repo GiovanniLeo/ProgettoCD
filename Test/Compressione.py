@@ -72,7 +72,7 @@ def compressione(fileName):
     #Start Bmtf
     print("Start BMTF")
 
-    bmtfUtils = Bmtf(6)
+    bmtfUtils = Bmtf(10)
     bmtfUtils.cleanFile()
     filePathToRead = os.path.join(my_path, baseOutputPath + "outputSBWT.txt")
     fileOutputPath = os.path.join(my_path, baseOutputPath + "outputBMTF.txt")
