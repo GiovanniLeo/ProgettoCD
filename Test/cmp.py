@@ -14,6 +14,6 @@ def textCompare(fl1,fl2):
 if __name__ == '__main__':
     my_path = os.path.abspath(os.getcwd())
     my_path = os.path.abspath(os.path.join(my_path, '..'))
-    fileOriginal = os.path.join(my_path, "..\\ProgettoCD\\Input\\plrabn12.txt")
-    fileDecompressed = os.path.join(my_path, "..\\ProgettoCD\\Output\\Plain.txt")
+    fileOriginal = os.path.join(my_path, "..\\ProgettoCD\\Input\\fields.c")
+    fileDecompressed = os.path.join(my_path, "..\\ProgettoCD\\Output\\Plain.c")
     print(textCompare(fileOriginal, fileDecompressed))

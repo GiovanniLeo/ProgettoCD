@@ -14,7 +14,7 @@ import numpy as np
 if __name__ == "__main__":
     baseOutputPath = "..\\ProgettoCD\\Output\\"
     baseInputPath = "..\\ProgettoCD\\Input\\"
-    fileName = "alice29.txt"
+    fileName = "fields.c"
     fileExtension = fileName.split(".")[1]
     my_path = os.path.abspath(os.getcwd())
     my_path = os.path.abspath(os.path.join(my_path, '..'))
