@@ -9,5 +9,6 @@ if __name__ == '__main__':
     sbwt_dict = valueToPass[0]
     rle_dict = valueToPass[1]
     fileExtension = valueToPass[2]
-    dp.decompressione(sbwt_dict, rle_dict)
+    mtf_dict = valueToPass[3]
+    dp.decompressione(sbwt_dict, rle_dict, mtf_dict)
     cmp.compareFile(filename, "Plain." + fileExtension)

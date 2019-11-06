@@ -13,16 +13,14 @@ import shutil
 
 
 #Immutable tupe
-Row = namedtuple('Row', ['line', 'alphabet'])
+Row = namedtuple('Row', ['line'])
 
 #Function used for parallelaize
 def mapSbwt(x):
     sbwtUtils = Sbwt()
     resultIsbwt = ''
-    alphabet = x.alphabet
-    sbwtUtils.setRandomAlphabet(alphabet)
     lineToTransorm = x.line  # line method access to
-    resultIsbwt = sbwtUtils.Sibwt(lineToTransorm)
+    resultIsbwt = sbwtUtils.ibwt(lineToTransorm)
     resultIsbwt = resultIsbwt.replace("ç", " ")
     resultIsbwt = resultIsbwt + '\n'
     return resultIsbwt
@@ -30,7 +28,7 @@ def mapSbwt(x):
 
 
 
-def decompressione(sbwt_dict, rle_dict):
+def decompressione(sbwt_dict, rle_dict, alfabeth):
 
 
     baseOutputPath = "..\\ProgettoCD\\Output\\"
@@ -126,7 +124,7 @@ def decompressione(sbwt_dict, rle_dict):
     Ibmtf_start_time = time.time()
     for i in range(0, Bmtf_linesLen):
         Bmtf_lines[i] = Bmtf_lines[i].replace('\n', '')
-        IBmtf_transofmedLine = bmtfUtils.Ibmtf(Bmtf_lines[i].split(','))
+        IBmtf_transofmedLine = bmtfUtils.iMtF(Bmtf_lines[i].split(','), alfabeth)
         IBmtf_transofmedLine = IBmtf_transofmedLine + '\n'
         fileO.write(IBmtf_transofmedLine)
 
@@ -154,9 +152,7 @@ def decompressione(sbwt_dict, rle_dict):
 
     rows = []
     for i in range(0, linesLen):
-        if lines[i] in sbwt_dict.keys():
-            alphabet = sbwt_dict.get(lines[i])
-            rows.append(Row(lines[i], alphabet))
+        rows.append(Row(lines[i]))
     rows = tuple(rows)
    
     start_time = time.time()

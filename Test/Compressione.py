@@ -182,6 +182,7 @@ def compressione(fileName):
     returValues.append(SBWT_transfDict)
     returValues.append(Rle_lines_dict)
     returValues.append(fileExtension)
+    returValues.append(alfabeth)
 
     return returValues
 

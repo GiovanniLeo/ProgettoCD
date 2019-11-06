@@ -8,9 +8,9 @@ class Bmtf:
         self.rowtodelete = 0
         self.numofdecompression = 0
 
-    def MtF(self, plain_text):
+    def MtF(self, plain_text, alfabeth):
         # Initialise the list of characters (i.e. the dictionary)
-        dictionary = sorted(set(plain_text))
+        dictionary = sorted(set(alfabeth))
 
         # Transformation
         compressed_text = list()
@@ -30,7 +30,7 @@ class Bmtf:
 
     def iMtF(self, compressed_data, alfabeth):
         compressed_text = compressed_data
-        dictionary = alfabeth
+        dictionary = sorted(set(alfabeth))
 
         plain_text = ""
         rank = 0
