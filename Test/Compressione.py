@@ -92,7 +92,7 @@ def compressione(fileName):
     for i in range(0, linesLength):
         r = random.randint(0, alphaLen)
 
-        Bmtf_transformLine = bmtfUtils.Bmtf(str(lines[i]), alfabeth, key, r)
+        Bmtf_transformLine = bmtfUtils.MtF(str(lines[i]), alfabeth)
         Bmtf_transformLine = Bmtf_transformLine
         Bmtf_transfLines.append(Bmtf_transformLine)
 
