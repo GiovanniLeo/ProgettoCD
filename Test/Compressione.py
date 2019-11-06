@@ -45,7 +45,6 @@ def compressione(fileName):
     lines = fileUtils.readFileByLine(filePathToRead)
     linesLength = len(lines)
     alphaLen = len(alfabeth)
-    key = random.randint(0, alphaLen)
 
     for i in range(0, linesLength):
         lines[i] = lines[i].replace('\n', '')
@@ -55,11 +54,8 @@ def compressione(fileName):
 
     Sbwt_start_time = time.time()
     for i in range(0, linesLength):
-        r = random.randint(0, alphaLen)
-        randomAlphabet = sbwtUtils.initialize(alfabeth, key, r)
-        transformLine = sbwtUtils.sbwt(lines[i])
+        transformLine = sbwtUtils.bwt(lines[i])
         SBWT_transfLines.append(transformLine)
-        SBWT_transfDict.update({SBWT_transfLines[i]: randomAlphabet})
     Sbwt_elapsed_time = time.time() - Sbwt_start_time
     print(str(Sbwt_elapsed_time) + "  -> elapsed time of SbwtTrasform")
 

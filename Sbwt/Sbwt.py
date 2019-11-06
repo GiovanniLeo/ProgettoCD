@@ -2,44 +2,30 @@ from AlphabetUtils.AlphabethUtils import AlphabethUtils
 
 class Sbwt:
 
-    def __init__(self):
-        self.alphaUtils = AlphabethUtils()
-        self.randomAlphabet = ''
-
-    def initialize(self, alfabeth, key, r):
-        alphaList = [i for i in alfabeth]
-        randomOrderedAlphabet = self.alphaUtils.Perm(alphaList, key, r)
-        randomOrderedAlphabet = self.alphaUtils.appendLastCharacter(randomOrderedAlphabet)
-        self.randomAlphabet = ''.join(randomOrderedAlphabet)
-        return self.randomAlphabet
-
-    def setRandomAlphabet(self, alphabet):
-        self.randomAlphabet = alphabet
-
-    def sbwt(self, s):
+    def bwt(self, s):
         """Apply Burrows-Wheeler transform to input string."""
         assert "$" not in s, "\"$\" must be not present in the string"
-        s = s + "$"  # Add start and end of text marker
-        # Table of rotations of string (Viene ordinata secondo l'fabeto custom)
-        matrix = sorted([s[i:] + s[:i] for i in range(len(s))], key=lambda x: [self.randomAlphabet.index(c) for c in x])
-        # Table of rotations of string
-        last_column = [row[-1:] for row in matrix]  # Last characters of each row
+        s = s + "$" # Add start and end of text marker
+        table = sorted(s[i:] + s[:i] for i in range(len(s)))  # Table of rotations of string
+        last_column = [row[-1:] for row in table]  # Last characters of each row
         return "".join(last_column)  # Convert list of characters into string
 
-    def Sibwt(self, r):
+    def ibwt(self, r):
         """Apply inverse Burrows-Wheeler transform."""
         table = [""] * len(r)  # Make empty table
         for i in range(len(r)):
-            # Add a column of r ((Viene ordinata secondo l'fabeto custom))
-            table = sorted([r[i] + table[i] for i in range(len(r))],key=lambda x: [self.randomAlphabet.index(c) for c in x])
+            table = sorted(r[i] + table[i] for i in range(len(r)))  # Add a column of r
         s = [row for row in table if row.endswith("$")][0]  # Find the correct row (ending in ETX)
         return s.strip("$")  # Get rid of start and end markers
+
+
+
 
 if __name__ == "__main__":
     alfabeth = 'abcdefghijklmnopqrstuvwxyz#'
     test = Sbwt()
-    test.initialize(alfabeth, 3, 2)
-    print(test.sbwt("mississippi"))
-    r = test.sbwt("mississippi")
+    #test.initialize(alfabeth, 3, 2)
+    print(test.bwt("mississippi"))
+    r = test.bwt("mississippi")
     # print(test.bwt("mississippi"))
-    print(test.Sibwt(r))
+    print(test.ibwt(r))
